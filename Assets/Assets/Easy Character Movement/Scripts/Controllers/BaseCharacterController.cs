@@ -503,6 +503,11 @@ namespace ECM.Controllers
 
         public bool isCrouching { get; protected set; }
 
+        public bool isHidden
+        {
+            get;
+            set;
+        }
         #endregion
 
         #region METHODS
