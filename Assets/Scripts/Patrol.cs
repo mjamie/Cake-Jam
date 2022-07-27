@@ -17,7 +17,7 @@ public class Patrol : MonoBehaviour
 
     private NavMeshAgent agent;
     private TriggerSensor triggerSensor;
-
+    private Animator animator;
     private float pauseTime = 0;
     private float pastTime = 0;
 
@@ -26,6 +26,7 @@ public class Patrol : MonoBehaviour
 
     void Start()
     {
+        animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
         triggerSensor = GetComponent<TriggerSensor>();
 
@@ -55,6 +56,8 @@ public class Patrol : MonoBehaviour
         // cycling to the start if necessary.
         destPoint = (destPoint + 1) % points.Length;
 
+        animator.SetBool("moving", true);
+
         pauseTime = Random.Range(3, 5);
         pastTime = 0;
     }
@@ -63,6 +66,9 @@ public class Patrol : MonoBehaviour
     void Update()
     {
         inVision = false;
+        chasing = false;
+
+        print(agent.remainingDistance);
 
         foreach (var item in triggerSensor.DetectedObjects)
         {
@@ -71,29 +77,64 @@ public class Patrol : MonoBehaviour
                 if (player.GetComponent<BaseCharacterController>().isHidden)
                     return;
 
+
+                animator.SetBool("moving", true);
+
                 inVision = true;
                 agent.destination = player.transform.position;
+
+                if (agent.remainingDistance < 2f)
+                {
+                    animator.SetTrigger("attack");
+                    agent.isStopped = true;
+                }
                 return;
             }
         }
-        if (Vector3.Distance(transform.position, player.transform.position) <= minDis && !inVision)
+        if (Vector3.Distance(transform.position, player.transform.position) <= minDis)
         {
             if (player.GetComponent<BaseCharacterController>().isHidden)
                 return;
 
+            animator.SetBool("moving", true);
+
             chasing = true;
             agent.destination = player.transform.position;
+
+            if (agent.remainingDistance < 2f)
+            {
+                animator.SetTrigger("attack");
+                agent.isStopped = true;
+            }
             return;
+        }
+
+        if (agent.isStopped)
+        {
+
+            animator.SetBool("moving", false);
+            pastTime += Time.deltaTime;
+
+            if (2 <= pastTime)
+            {
+                GotoNextPoint();
+                agent.isStopped = false;
+                pastTime = 0;
+            }
         }
 
         // Choose the next destination point when the agent gets
         // close to the current one.
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
+
+            animator.SetBool("moving", false);
             pastTime += Time.deltaTime;
 
             if (pauseTime <= pastTime)
+            {
                 GotoNextPoint();
+            }
         }
     }
 }

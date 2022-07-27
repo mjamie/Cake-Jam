@@ -50,7 +50,7 @@ MonoBehaviour:
     - {fileID: 4496486162871604440, guid: 8d1a6310726c8af46a654a63d731e1d9, type: 2}
   paintTools:
     enableHistory: 1
-    enableLivePreview: 1
+    enableLivePreview: 0
     useSimpleCursor: 0
     normalActionCursorColor: {r: 0.5019608, g: 0.5019608, b: 1, a: 0.7490196}
     negativeActionCursorColor: {r: 1, g: 0.5019608, b: 0.5019608, a: 0.7490196}
@@ -60,7 +60,7 @@ MonoBehaviour:
     opacityStep: 0.025
     densityStep: 1
     useMultiSplatsSelector: 0
-    showTerrainMask: 0
+    showTerrainMask: 1
   splineTools:
     anchorColor: {r: 1, g: 0, b: 0, a: 1}
     segmentColor: {r: 1, g: 0, b: 0, a: 1}
@@ -101,7 +101,7 @@ MonoBehaviour:
     tileCountX: 1
     tileCountZ: 1
     groupId: 0
-    terrainNamePrefix: Terrain
+    terrainNamePrefix: Ulterior
     dataDirectory: Assets/_TerrainData
     setShaderGroupId: -1
   renderPipelines:
