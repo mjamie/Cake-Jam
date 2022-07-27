@@ -98,8 +98,8 @@ MonoBehaviour:
     splatsModel: 2
     origin: {x: 0, y: 0, z: 0}
     tileSize: {x: 500, y: 500, z: 500}
-    tileCountX: 3
-    tileCountZ: 3
+    tileCountX: 1
+    tileCountZ: 1
     groupId: 0
     terrainNamePrefix: Terrain
     dataDirectory: Assets/_TerrainData
