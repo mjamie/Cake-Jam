@@ -2,7 +2,7 @@
 using ECM.Helpers;
 using UnityEngine;
 using UnityEngine.Serialization;
-
+using UnityEngine.Animations;
 namespace ECM.Controllers
 {
     /// <summary>
@@ -791,11 +791,13 @@ namespace ECM.Controllers
             }
 
             // Jump logic
+            if (!GetComponentInChildren<Animator>().GetBool("isCrouching"))
+            {
 
-            Jump();
-            MidAirJump();
-            UpdateJumpTimer();
-
+                Jump();
+                MidAirJump();
+                UpdateJumpTimer();
+            }
             // Update root motion state,
             // should animator root motion be enabled? (eg: is grounded)
 
@@ -805,18 +807,45 @@ namespace ECM.Controllers
         /// <summary>
         /// Perform character animation.
         /// </summary>
-
+        bool crouching = false;
         protected virtual void Animate()
         {
             GetComponentInChildren<Animator>().ResetTrigger("Jump");
             bool jogging = moveDirection.magnitude > 0 ? true : false;
-
+            
             GetComponentInChildren<Animator>().SetBool("jogging", jogging);
 
             if (isJumping) { 
                 GetComponentInChildren<Animator>().SetTrigger("Jump");
                 }
 
+            if (crouch)
+            {
+                if (GetComponentInChildren<Animator>().GetBool("isCrouching"))
+                {
+                    GetComponentInChildren<Animator>().SetBool("isCrouching", false);
+                    speed = 5;
+                }
+                else
+                {
+                    GetComponentInChildren<Animator>().SetBool("isCrouching", true);
+                }
+            }
+
+            if (GetComponentInChildren<Animator>().GetBool("isCrouching"))
+            {
+                speed = 2;
+                bool crouchWalk = moveDirection.magnitude > 0 ? true : false;
+
+                if (crouchWalk)
+                {
+                    GetComponentInChildren<Animator>().SetFloat("Blend",1);
+                }
+                else
+                {
+                    GetComponentInChildren<Animator>().SetFloat("Blend", 0);
+                }
+            }
         }
 
         /// <summary>
@@ -864,7 +893,7 @@ namespace ECM.Controllers
 
             jump = Input.GetButton("Jump");
 
-            crouch = Input.GetKey(KeyCode.C);
+            crouch = Input.GetKeyDown(KeyCode.C);
         }
 
         #endregion
