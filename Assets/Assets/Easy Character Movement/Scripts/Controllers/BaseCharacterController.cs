@@ -806,7 +806,14 @@ namespace ECM.Controllers
         /// Perform character animation.
         /// </summary>
 
-        protected virtual void Animate() { }
+        protected virtual void Animate() {
+
+            if (moveDirection.magnitude > 0)
+            {
+                print("here");
+            }
+        
+        }
 
         /// <summary>
         /// Update character's rotation.
