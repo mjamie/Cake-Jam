@@ -808,15 +808,15 @@ namespace ECM.Controllers
 
         protected virtual void Animate()
         {
+            GetComponentInChildren<Animator>().ResetTrigger("Jump");
             bool jogging = moveDirection.magnitude > 0 ? true : false;
 
             GetComponentInChildren<Animator>().SetBool("jogging", jogging);
 
-            if (jump)
-            {
-                print("here");
-                GetComponentInChildren<Animator>().SetTrigger("jump");
-            }
+            if (isJumping) { 
+                GetComponentInChildren<Animator>().SetTrigger("Jump");
+                }
+
         }
 
         /// <summary>
