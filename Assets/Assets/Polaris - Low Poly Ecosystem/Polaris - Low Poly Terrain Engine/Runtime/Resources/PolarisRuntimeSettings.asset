@@ -431,4 +431,4 @@ MonoBehaviour:
     redTexture: {fileID: 2800000, guid: be6c4d41444b35148b68cd4432974843, type: 3}
     blackTexture: {fileID: 2800000, guid: 47a91f8808e6f334a84f127655c54663, type: 3}
   isEditingGeometry: 0
-  isEditingFoliage: 0
+  isEditingFoliage: 1
