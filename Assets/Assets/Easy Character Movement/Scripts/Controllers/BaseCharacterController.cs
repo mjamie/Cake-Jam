@@ -82,7 +82,7 @@ namespace ECM.Controllers
         [SerializeField]
         private float _extraJumpTime = 0.5f;
 
-        [Tooltip("Acceleration while jump button is held down, given in meters / sec^2."+
+        [Tooltip("Acceleration while jump button is held down, given in meters / sec^2." +
                  "As rule of thumb, configure it to your character's gravity.")]
         [SerializeField]
         private float _extraJumpPower = 25.0f;
@@ -131,7 +131,7 @@ namespace ECM.Controllers
         protected int _midAirJumpCount;
 
         private bool _allowVerticalMovement;
-        
+
         private bool _restoreVelocityOnResume = true;
 
         #endregion
@@ -696,7 +696,7 @@ namespace ECM.Controllers
         /// <summary>
         /// Handle character's Crouch / UnCrouch.
         /// </summary>
-        
+
         protected virtual void Crouch()
         {
             // If crouching behaviour is disabled, return
@@ -791,7 +791,7 @@ namespace ECM.Controllers
             }
 
             // Jump logic
-            
+
             Jump();
             MidAirJump();
             UpdateJumpTimer();
@@ -806,13 +806,17 @@ namespace ECM.Controllers
         /// Perform character animation.
         /// </summary>
 
-        protected virtual void Animate() {
+        protected virtual void Animate()
+        {
+            bool jogging = moveDirection.magnitude > 0 ? true : false;
 
-            if (moveDirection.magnitude > 0)
+            GetComponentInChildren<Animator>().SetBool("jogging", jogging);
+
+            if (jump)
             {
                 print("here");
+                GetComponentInChildren<Animator>().SetTrigger("jump");
             }
-        
         }
 
         /// <summary>
@@ -826,7 +830,7 @@ namespace ECM.Controllers
             if (useRootMotion && applyRootMotion && useRootMotionRotation)
             {
                 // Use animation rotation to rotate our character
-                
+
                 movement.rotation *= animator.deltaRotation;
             }
             else
@@ -958,7 +962,7 @@ namespace ECM.Controllers
 
             Animate();
         }
-        
+
         #endregion
     }
 }
