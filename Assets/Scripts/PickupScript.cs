@@ -29,7 +29,14 @@ public class PickupScript : MonoBehaviour
     {
         if(other.name == "Player")
         {
-            other.GetComponent<PlayerPickUpScript>().pickups--;
+            if (gameObject.tag == "Heart")
+            {
+                //increase player health
+            }
+            else
+            {
+                other.GetComponent<PlayerPickUpScript>().pickups--; //decrease pickup - make specific for each pickup
+            }
             Destroy(gameObject);
         }
     }
