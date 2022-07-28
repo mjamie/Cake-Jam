@@ -48,7 +48,7 @@ public class PlayerHealth : MonoBehaviour
 
                 animator.SetTrigger("isDead");
                 GetComponent<BaseCharacterController>().pause = true;
-                print("deadf");
+                print("dead");
                 return;
             }
 
