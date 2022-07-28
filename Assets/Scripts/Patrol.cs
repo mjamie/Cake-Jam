@@ -11,6 +11,9 @@ public class Patrol : MonoBehaviour
 
     public float minDis = 5;
 
+    [SerializeField] private int minPatroleTime = 3;
+    [SerializeField] private int maxPatrolTime = 5;
+
     private int destPoint = 0;
     private bool inVision = false;
     private bool chasing = false;
@@ -60,7 +63,7 @@ public class Patrol : MonoBehaviour
 
         animator.SetBool("moving", true);
 
-        pauseTime = Random.Range(3, 5);
+        pauseTime = Random.Range(minPatroleTime, maxPatrolTime);
         pastTime = 0;
     }
 
@@ -125,7 +128,7 @@ public class Patrol : MonoBehaviour
                 return;
             }
         }
-        
+
         // Choose the next destination point when the agent gets
         // close to the current one.
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
